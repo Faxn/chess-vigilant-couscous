@@ -1,0 +1,31 @@
+{
+  "name": "chess-vigilant-couscous",
+  "version": "0.0.0",
+  "description": "Webapp for chess2",
+  "main": "server.js",
+  "scripts": {
+    "test": "node_modules/karma/bin/karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Faxn/chess-vigilant-couscous.git"
+  },
+  "author": "Blake Curry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Faxn/chess-vigilant-couscous/issues"
+  },
+  "dependencies": {
+    "amdefine": "^1.0.0",
+    "express": "^4.13.4",
+    "jasmine": "^2.4.1",
+    "karma": "^0.13.22",
+    "requirejs": "^2.2.0",
+    "serve-static": "^1.10.2"
+  },
+  "devDependencies": {
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-requirejs": "^1.0.0"
+  }
+}
