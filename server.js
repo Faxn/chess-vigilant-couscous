@@ -23,12 +23,15 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
  
 //host static files.
 app.use(serveStatic('static/'));
+app.use("/lib/", serveStatic('node_modules/angular/'));
+app.use("/lib/", serveStatic('node_modules/requirejs/'));
+app.use("/", serveStatic('src'));
 
 
 
 
 //host the server
-app.set('port', 8094);
+app.set('port', 9424);
 var server = http.createServer(app);
 server.listen(app.get('port'), function (){});
-console.log('Server running at ????:'+8094);
+console.log('Server running at ????:'+9424);

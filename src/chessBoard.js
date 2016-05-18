@@ -9,13 +9,8 @@
 // 00 01 02 03 04 05 06 07
 
 
-if (typeof define !== 'function') {
-    console.log('using amdefine');
-    var define = require('amdefine')(module);
-}
-
 define(function() {
-    
+
     
     var chessGame = function () {
        this.board = [ 0,0,0,0,0,0,0,0,
@@ -48,14 +43,17 @@ define(function() {
     chessGame.prototype.getFile = function(idx){
        return idx % 8;
     }
+    
+    /**
+     * Returns an array of the bord as ar[row][col].
+     * Intended for displaying the board.
+     */
+    chessGame.prototype.to2dArray = function(){}
 
     //The value returned from the function is
     //used as the module export visible to Node.
     return chessGame;
 });
-
-
-
 
 
 

@@ -1,0 +1,52 @@
+<html lang='en'>
+<body>
+	
+	<div ng-controller='mainController'>
+		<input type=number ng-model="k"></input>
+		<br>
+		<br>
+		{{k}}
+        
+        
+        
+        <chess-board board="board"></chess-board>
+	</div>
+    
+    
+    <link rel="stylesheet" type="text/css" href="board.css">
+	
+	
+	<!--CDNs are for production! -->
+	<script src="/lib/angular.js"></script>
+    <script src="/lib/require.js" data-main='main.js'></script>
+
+	
+	<script>
+    require(['chessBoard'], function(chessGame){
+        dev = angular.module('chessDev', []);
+        dev.controller("mainController", function($scope){
+            $scope.k=7;
+            $scope.board = new chessGame();
+            $scope.board.init();
+
+        });
+        dev.directive("chessBoard", function(){
+            return {
+                templateUrl:'/board.html',
+                restrict:'E',
+                scope: {
+                    board:'=board'
+                }
+                
+            };
+        })
+	    	    
+	    angular.bootstrap(document, ['chessDev']);	    
+	});
+        
+        
+	</script>
+	
+
+</body>
+</html>

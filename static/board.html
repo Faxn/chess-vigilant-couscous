@@ -1,0 +1,16 @@
+
+
+<div style='border:1px solid black;'>
+<h1>Murder</h1>
+
+<table>
+        <tr ng-Repeat="rank in [0,1,2,3,4,5,6,7]">
+            <td class='square {{(rank+file)%2==0?"black":"white"}}' ng-Repeat="file in [0,1,2,3,4,5,6,7]">
+                {{board.board[(7-rank)*8+file]}}
+            </td>
+        </tr>
+</table>
+
+<pre>{{board.board}}</pre>
+
+</div>

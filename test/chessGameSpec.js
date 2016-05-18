@@ -1,5 +1,5 @@
 
-define(['base/src/chessGame.js'], function(chessGame){
+define(['base/src/chessBoard.js'], function(chessGame){
 describe('The chess game class', function(){
 
     
