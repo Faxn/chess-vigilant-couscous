@@ -1,16 +1,23 @@
 <html lang='en'>
-<body>
-	
-	<div ng-controller='mainController'>
-		<input type=number ng-model="k"></input>
-		<br>
-		<br>
-		{{k}}
-        
-        
-        
+<body ng-controller='mainController' style='display:flex; flex-direction:column;'>
+    
+    
+	<div id='board' style='display:flex;flex-direction:row;'>
         <chess-board board="board"></chess-board>
+        <div id=pieces >
+        <ul>
+            <li ng-repeat='i in pieces'>{{i}}</li>
+        </ul>
+    </div>
 	</div>
+    
+    <div id=importExport style='display:flex; flex-direction:column;'>
+        <textarea style="width:24em;height:9em;" ng-model='importText' ng-change="import()">
+        </textarea>
+        <textarea readonly='readonly' ng-model='board.board' style="width:24em;height:9em;">
+        </textarea>
+    </div>
+    
     
     
     <link rel="stylesheet" type="text/css" href="board.css">
@@ -22,12 +29,28 @@
 
 	
 	<script>
-    require(['chessBoard'], function(chessGame){
+    require(['chessBoard', 'chessPieces'], function(chessGame, pieces){
         dev = angular.module('chessDev', []);
         dev.controller("mainController", function($scope){
-            $scope.k=7;
+            
             $scope.board = new chessGame();
             $scope.board.init();
+            
+            $scope.importText = '[]';
+            
+            $scope.import = function(){
+                newBoard = eval($scope.importText);
+                console.log($scope.importText);
+                console.log(newBoard);
+                if(Array.isArray(newBoard) && newBoard.length == 64){
+                    $scope.board.board=newBoard;
+                }else{
+                    console.log("bad Board");
+                }
+            }
+            
+            $scope.pieces=pieces.values;
+            console.log(pieces.values);
 
         });
         dev.directive("chessBoard", function(){
@@ -39,7 +62,7 @@
                 }
                 
             };
-        })
+        });
 	    	    
 	    angular.bootstrap(document, ['chessDev']);	    
 	});
