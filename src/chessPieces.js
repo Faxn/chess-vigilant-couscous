@@ -1,30 +1,46 @@
 
 define(function(){
-    var exports = {};
+    var pieces = {};
     
+    
+    /**
+     * Encoding
+     */
     //utility
-    exports.empty=0;
+    pieces.empty=0;
     
     //Sides
-    exports.white = 0;
-    exports.black = 128;
+    pieces.white = 0;
+    pieces.black = 128;
 
     //Chess Pieces
-    exports.pawn = 1;
-    exports.knight = 2;
-    exports.bishop = 3;
-    exports.rook = 4;
-    exports.king = 5;
-    exports.queen = 6;
+    pieces.pawn = 1;
+    pieces.knight = 2;
+    pieces.bishop = 3;
+    pieces.rook = 4;
+    pieces.king = 5;
+    pieces.queen = 6;
     
-    exports.types = [1,2,3,4,5,6];
+    pieces.types = [1,2,3,4,5,6];
     values = [];
-    for(i in exports.types){
+    for(i in pieces.types){
         values[values.length] = parseInt(i);
         values[values.length] = parseInt(i)+128;
     }
-    exports.values = values;
+    pieces.values = values;
 
+    /**
+     * Moving
+     */
+    pieces.moves = function(game, index){
+        
+    }
+
+
+
+    /**
+     * Rendering
+     */
     unicode = {
         1:'\u2659',
         2:'\u2658',
@@ -42,7 +58,7 @@ define(function(){
 
 
     offset = 6;
-    exports.toUnicode= function(piece){
+    pieces.toUnicode= function(piece){
         if(piece == 0){
             
         return ' '
@@ -52,5 +68,5 @@ define(function(){
         return piece;
     }
     
-    return exports;
+    return pieces;
 });

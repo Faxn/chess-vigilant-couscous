@@ -44,14 +44,47 @@ define(function() {
        return idx % 8;
     }
     
+    
+    chessGame.Direction = {
+        left:4,
+        up:8,
+        right:6,
+        down:2
+    }
+    
     /**
-     * Returns an array of the bord as ar[row][col].
-     * Intended for displaying the board.
+     * Finds the square in direction from the specified square.
+     * returns the index of that square.
      */
-    chessGame.prototype.to2dArray = function(){}
+    chessGame.prototype.seek = function(idx, dir){
+        if (Array.isArray(dir)) {
+            i = idx;
+            for( d in dir ){
+                i = this.seek(i, d);
+            }
+            return i;
+        } else if(dir == chessGame.Direction.left){
+            if (idx % 8 == 0) return -1;
+            return idx - 1;
+        } else if(dir == chessGame.Direction.up){
+            if (idx / 8 > 7) return -1; //> because js numbers are all floats.
+            return idx + 8;
+        } else if(dir == chessGame.Direction.right){
+            if (idx % 8 == 7) return -1;
+            return idx + 1;
+        } else if(dir == chessGame.Direction.down){
+            if (idx / 8 < 1) return -1;
+            return idx - 8;
+        } else {
+            console.log("Can't seek "+dir);
+            var e = TypeError("Tried to seek in a direction that doesn't exist.")
+            e.dir =dir;
+            throw e;
+        }
+        throw Error("Inmcomplete Implementation, this should be unreachable.");
+    }
 
-    //The value returned from the function is
-    //used as the module export visible to Node.
+    
     return chessGame;
 });
 
