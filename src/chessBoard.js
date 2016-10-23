@@ -8,11 +8,10 @@
 // 08 09 10 11 12 13 14 15
 // 00 01 02 03 04 05 06 07
 
-
-define(function() {
+define(['./Chess.js'], function(Chess) {
 
     
-    var chessGame = function () {
+    var chessBoard = function () {
        this.board = [ 0,0,0,0,0,0,0,0,
                      0,0,0,0,0,0,0,0,
                      0,0,0,0,0,0,0,0,
@@ -24,10 +23,17 @@ define(function() {
     };
     
     
+    chessBoard.Direction = {
+        left:4,
+        up:8,
+        right:6,
+        down:2
+    }
+    
     /** Set the board to the traditional chess starting position.
      */
     back = [4,2,3,6,5,3,2,4]
-    chessGame.prototype.init = function(){
+    chessBoard.prototype.init = function(){
            for(i=0; i<8; i++){
               this.board[i+48]=129; //black pawns
               this.board[i+8]=1; //white pawns
@@ -36,43 +42,47 @@ define(function() {
            }
     }
     
-    chessGame.prototype.getRank = function(idx){
+    chessBoard.prototype.getRank = function(idx){
        return idx/8;
     }
 
-    chessGame.prototype.getFile = function(idx){
+    chessBoard.prototype.getFile = function(idx){
        return idx % 8;
     }
     
+    /**
+     * returns the unicode glyph for the piece for fancy display
+     */
+    chessBoard.prototype.getDisplay = function(idx){
+         var p = this.board[idx];
+         var g = Chess.toUnicode(p);
+         //console.log("Rendering "+p+" as "+g)
+         return g
+     }
     
-    chessGame.Direction = {
-        left:4,
-        up:8,
-        right:6,
-        down:2
-    }
+    
     
     /**
      * Finds the square in direction from the specified square.
      * returns the index of that square.
      */
-    chessGame.prototype.seek = function(idx, dir){
+    chessBoard.prototype.seek = function(idx, dir){
         if (Array.isArray(dir)) {
             i = idx;
             for( d in dir ){
                 i = this.seek(i, d);
             }
             return i;
-        } else if(dir == chessGame.Direction.left){
+        } else if(dir == chessBoard.Direction.left){
             if (idx % 8 == 0) return -1;
             return idx - 1;
-        } else if(dir == chessGame.Direction.up){
+        } else if(dir == chessBoard.Direction.up){
             if (idx / 8 > 7) return -1; //> because js numbers are all floats.
             return idx + 8;
-        } else if(dir == chessGame.Direction.right){
+        } else if(dir == chessBoard.Direction.right){
             if (idx % 8 == 7) return -1;
             return idx + 1;
-        } else if(dir == chessGame.Direction.down){
+        } else if(dir == chessBoard.Direction.down){
             if (idx / 8 < 1) return -1;
             return idx - 8;
         } else {
@@ -85,7 +95,7 @@ define(function() {
     }
 
     
-    return chessGame;
+    return chessBoard;
 });
 
 
