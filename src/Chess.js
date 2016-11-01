@@ -1,41 +1,48 @@
 
+/**
+ * Information and helper functions for chess2 implementation.
+ */
 
 define( function(){
     
     
-    var chessGame = {};
+    var Chess = {};
     
     
     
     /**
-     * Encoding
+     * Constants
      */
-    var pieces = {};
     //utility
-    pieces.empty=0;
+    Chess.EMPTY=0;
     
     //Sides
-    pieces.white = 0;
-    pieces.black = 128;
+    Chess.WHITE = 0;
+    Chess.BLACK = 128;
 
-    //Chess Pieces
-    pieces.pawn = 1;
-    pieces.knight = 2;
-    pieces.bishop = 3;
-    pieces.rook = 4;
-    pieces.king = 5;
-    pieces.queen = 6;
+    //Pieces
+    Chess.PAWN = 1;
+    Chess.KNIGHT = 2;
+    Chess.BISHOP = 3;
+    Chess.ROOK = 4;
+    Chess.KING = 5;
+    Chess.QUEEN = 6;
     
-    pieces.types = [1,2,3,4,5,6];
+    Chess.types = [1,2,3,4,5,6];
     values = [];
-    for(i in pieces.types){
+    for(i in Chess.types){
         values[values.length] = parseInt(i);
         values[values.length] = parseInt(i)+128;
     }
-    pieces.values = values;
+    Chess.values = values;
     
-    chessGame.pieces = pieces;
-
+    
+    
+    Chess.LEFT = 4;
+    Chess.UP = 8;
+    Chess.RIGHT = 6;
+    Chess.DOWN = 2;
+    
 
     /**
      * Rendering
@@ -57,7 +64,7 @@ define( function(){
 
 
     offset = 6;
-    chessGame.toUnicode= function(piece){
+    Chess.toUnicode= function(piece){
         if(piece == 0){
             
         return ' '
@@ -76,5 +83,5 @@ define( function(){
    
     
     
-    return chessGame
+    return Chess
 });

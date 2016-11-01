@@ -8,6 +8,10 @@
 // 08 09 10 11 12 13 14 15
 // 00 01 02 03 04 05 06 07
 
+/**
+ * represents a single 8x8 chessboard, with pieces encoded as specified in 'Chess.js'. 
+ */
+
 define(['./Chess.js'], function(Chess) {
 
     
@@ -19,7 +23,8 @@ define(['./Chess.js'], function(Chess) {
                      0,0,0,0,0,0,0,0,
                      0,0,0,0,0,0,0,0,
                      0,0,0,0,0,0,0,0,
-                     0,0,0,0,0,0,0,0]    
+                     0,0,0,0,0,0,0,0]
+        this.turn = Chess.WHITE
     };
     
     
@@ -60,6 +65,70 @@ define(['./Chess.js'], function(Chess) {
          return g
      }
     
+    
+    
+    
+    function cursor(board, idx){
+        this.board = board
+        this.idx = idx
+    }
+    
+    cursor.prototype.getPiece = function(){
+        return this.board.board[this.idx]
+    }
+        
+    /**
+     * moves the cursor. 
+     */
+    cursor.prototype.seek = function(dir){
+        //once your go off the board that's it.
+        if(this.idx = -1) return this;
+        
+        //handle array seeks for convience
+        if (Array.isArray(dir)) {
+            for( d in dir ){
+                this.seek(d);
+            }
+            return this;
+        }
+        
+        this.idx = this.board.seek(this.idx, dir)
+        return this
+    }
+    
+    
+    /**
+     * Finds the square in direction from the specified square.
+     * returns the index of that square.
+     * Use cursor instead.
+     */
+    chessBoard.prototype.seek = function(dir){
+        if(dir == chessBoard.Direction.left){
+            if (idx % 8 == 0) return -1;
+            return idx - 1;
+        } else if(dir == chessBoard.Direction.up){
+            if (idx / 8 > 7) return -1; //> because js numbers are all floats.
+            return idx + 8;
+        } else if(dir == chessBoard.Direction.right){
+            if (idx % 8 == 7) return -1;
+            return idx + 1;
+        } else if(dir == chessBoard.Direction.down){
+            if (idx / 8 < 1) return -1;
+            return idx - 8;
+        } else {
+            console.log("Can't seek "+dir);
+            var e = TypeError("Tried to seek in a direction that doesn't exist.")
+            e.dir =dir;
+            throw e;
+        }
+        throw Error("Inmcomplete Implementation, this should be unreachable.");
+    }
+    
+    
+    
+    chessBoard.prototype.getCursor = function(idx){
+        return new cursor(this, idx)
+    }
     
     
     /**

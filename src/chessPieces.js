@@ -16,15 +16,30 @@ define(['./Chess.js'], function(Chess) {
    
     
     /**
-     * Move calculation functions
+     * psuedolegal Move calculation functions
      */
+    MoveFunctions = [];
     
+    
+     
+    
+    MoveFunctions[Chess.PAWN] = function(board, idx){
+         moves = []
+         piece = board.board[idx]
+         if(piece && Chess.BLACK){ //piece is black
+             return [17]
+         }else{
+             
+         }
+         return moves
+    }
     
     /**
      * Public get moves function
      */
-    pieces.getMoves = function(idx, board){
-        throw 'not implemented'
+    pieces.getMoves = function (board, idx){
+        piece = board.board[idx] % Chess.BLACK
+        return MoveFunctions[piece](board, idx)
     }
     
     

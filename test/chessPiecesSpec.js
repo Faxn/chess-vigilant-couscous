@@ -8,6 +8,8 @@ define(['base/src/chessBoard.js', 'base/src/chessPieces.js'], function(chessGame
     
     
     describe("The Pawn", function(){
-        
+        it("should move up when white", function(){
+            expect(chessPieces.getMoves(board1, 9)).toContain(17)
+        })
     });
 });
