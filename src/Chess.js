@@ -37,11 +37,11 @@ define( function(){
     Chess.values = values;
     
     
-    
-    Chess.LEFT = 4;
-    Chess.UP = 8;
-    Chess.RIGHT = 6;
-    Chess.DOWN = 2;
+    Chess.DIRECTION = {}
+    Chess.DIRECTION.LEFT = 4;
+    Chess.DIRECTION.UP = 8;
+    Chess.DIRECTION.RIGHT = 6;
+    Chess.DIRECTION.DOWN = 2;
     
 
     /**

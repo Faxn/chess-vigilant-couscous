@@ -1,6 +1,6 @@
 
 define(['base/src/chessBoard.js'], function(chessGame){
-describe('The chess game class', function(){
+describe('The chess Board class', function(){
 
     
     
@@ -62,6 +62,28 @@ describe('The chess game class', function(){
         
         
     });
+    
+    it('should provide a cursor', function(){
+        c = game.getCursor(0);
+        expect(c).not.toBe(undefined)
+        
+        it("should know it's rank and file", function(){
+            expect(c.getRank()).toBe(0)
+            expect(c.getFile()).toBe(0)
+        })
+        
+        it("Should move when it seeks", function(){
+            c.seek(8).seek(6)
+            expect(c.getRank()).toBe(1)
+            expect(c.getFile()).toBe(1)
+            expect(c.idx).toBe(9)
+        })
+        
+        it("17 should be in rank 2", function(){
+            c2 = game.getCursor(17)
+            expect(c2.getRank()).toBe(2)
+        })
+    })
     
 });
 });

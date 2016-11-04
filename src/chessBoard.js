@@ -25,6 +25,7 @@ define(['./Chess.js'], function(Chess) {
                      0,0,0,0,0,0,0,0,
                      0,0,0,0,0,0,0,0]
         this.turn = Chess.WHITE
+        this.moveHilight = []
     };
     
     
@@ -47,26 +48,13 @@ define(['./Chess.js'], function(Chess) {
            }
     }
     
-    chessBoard.prototype.getRank = function(idx){
-       return idx/8;
-    }
-
-    chessBoard.prototype.getFile = function(idx){
-       return idx % 8;
-    }
-    
-    /**
-     * returns the unicode glyph for the piece for fancy display
-     */
-    chessBoard.prototype.getDisplay = function(idx){
-         var p = this.board[idx];
-         var g = Chess.toUnicode(p);
-         //console.log("Rendering "+p+" as "+g)
-         return g
-     }
     
     
     
+    
+    /*******************************************************************
+     * Board Navigation (Cursor/seek)
+     */  
     
     function cursor(board, idx){
         this.board = board
@@ -76,13 +64,21 @@ define(['./Chess.js'], function(Chess) {
     cursor.prototype.getPiece = function(){
         return this.board.board[this.idx]
     }
+    
+    cursor.prototype.getRank = function(){
+       return Math.floor(this.idx/8);
+    }
+
+    cursor.prototype.getFile = function(){
+       return this.idx % 8;
+    }
         
     /**
      * moves the cursor. 
      */
     cursor.prototype.seek = function(dir){
         //once your go off the board that's it.
-        if(this.idx = -1) return this;
+        if(this.idx == -1) return this;
         
         //handle array seeks for convience
         if (Array.isArray(dir)) {
@@ -96,40 +92,13 @@ define(['./Chess.js'], function(Chess) {
         return this
     }
     
-    
-    /**
-     * Finds the square in direction from the specified square.
-     * returns the index of that square.
-     * Use cursor instead.
-     */
-    chessBoard.prototype.seek = function(dir){
-        if(dir == chessBoard.Direction.left){
-            if (idx % 8 == 0) return -1;
-            return idx - 1;
-        } else if(dir == chessBoard.Direction.up){
-            if (idx / 8 > 7) return -1; //> because js numbers are all floats.
-            return idx + 8;
-        } else if(dir == chessBoard.Direction.right){
-            if (idx % 8 == 7) return -1;
-            return idx + 1;
-        } else if(dir == chessBoard.Direction.down){
-            if (idx / 8 < 1) return -1;
-            return idx - 8;
-        } else {
-            console.log("Can't seek "+dir);
-            var e = TypeError("Tried to seek in a direction that doesn't exist.")
-            e.dir =dir;
-            throw e;
-        }
-        throw Error("Inmcomplete Implementation, this should be unreachable.");
+    cursor.prototype.toString = function(){
+        return "[ cursor on "+this.getPiece()+"@"+this.idx+" ]"
     }
-    
-    
     
     chessBoard.prototype.getCursor = function(idx){
         return new cursor(this, idx)
     }
-    
     
     /**
      * Finds the square in direction from the specified square.
@@ -162,6 +131,21 @@ define(['./Chess.js'], function(Chess) {
         }
         throw Error("Inmcomplete Implementation, this should be unreachable.");
     }
+    
+    
+    /*******************************************************************
+     * GUI Functions
+     */
+     
+     /**
+     * returns the unicode glyph for the piece for fancy display
+     */
+    chessBoard.prototype.getDisplay = function(idx){
+         var p = this.board[idx];
+         var g = Chess.toUnicode(p);
+         //console.log("Rendering "+p+" as "+g)
+         return g
+     }
 
     
     return chessBoard;
