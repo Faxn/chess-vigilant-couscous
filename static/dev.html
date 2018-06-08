@@ -51,16 +51,22 @@
             
             $scope.pieces=pieces.values;
             console.log(pieces.values);
+            
+            $scope.onSquareClick = function(scope){
+				//this is really jank, but I don't know how else to find
+				//the inex of the square clicked.
+				file = scope.$index
+				rank = scope.$parent.$index
+				idx=((7-rank)*8+file)
+				
+				console.log(idx)
+			};
 
         });
         dev.directive("chessBoard", function(){
             return {
                 templateUrl:'/board.html',
                 restrict:'E',
-                scope: {
-                    board:'=board'
-                }
-                
             };
         });
 	    	    
